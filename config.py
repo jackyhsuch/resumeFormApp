@@ -21,6 +21,7 @@ class Config(object):
     ALLOWED_EXTENSIONS = set(['pdf'])
 
     IS_PROD = int(os.environ['IS_PROD'])
+    PORT = int(os.environ.get('PORT', 5000))
 
     if IS_PROD:
         url = urlparse.urlparse(os.environ['DATABASE_URL'])
