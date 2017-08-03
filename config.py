@@ -2,10 +2,13 @@ import os
 
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+try:
+    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+except Exception as e::
+    pass
 
-# basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config(object):
     DEBUG = False
