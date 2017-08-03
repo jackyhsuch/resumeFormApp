@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 try:
     dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
     load_dotenv(dotenv_path)
-except Exception as e::
+except Exception as e:
     pass
 
 
