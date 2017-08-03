@@ -13,13 +13,13 @@ def parseApplicationRequest(request):
     resume_file = request.files['resume_filename']
     photo = request.files['photo']
 
+    # if photo:
+    #     resume_filename = str(int(datetime.datetime.utcnow().timestamp())) + '.pdf'
 
-    if photo:
-        resume_filename = str(int(datetime.datetime.utcnow().timestamp())) + '.pdf'
+    #     im = Image.open(photo)
+    #     outfile = os.path.join(app.config['UPLOAD_FOLDER'], resume_filename)
+    #     im.save(outfile, "PDF", resolution=100.0)
 
-        im = Image.open(photo)
-        outfile = os.path.join(app.config['UPLOAD_FOLDER'], resume_filename)
-        im.save(outfile, "PDF", resolution=100.0)
 
     if 'resume_filename' in request.files and\
         resume_file.filename != '' and\
@@ -27,7 +27,14 @@ def parseApplicationRequest(request):
 
         resume_filename = str(int(datetime.datetime.utcnow().timestamp())) + '.pdf'
 
-        resume_file.save(os.path.join(app.config['UPLOAD_FOLDER'], resume_filename))
+        if resume_file.filename.endswith('.pdf'):
+            
+            resume_file.save(os.path.join(app.config['UPLOAD_FOLDER'], resume_filename))
+        else:
+            im = Image.open(resume_file)
+            outfile = os.path.join(app.config['UPLOAD_FOLDER'], resume_filename)
+            im.save(outfile, "PDF", resolution=100.0)
+
 
     applicant = Applicant(
             name = name,

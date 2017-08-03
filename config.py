@@ -18,7 +18,7 @@ class Config(object):
     SECRET_KEY = os.urandom(12)
 
     UPLOAD_FOLDER = 'app\\uploads'
-    ALLOWED_EXTENSIONS = set(['pdf'])
+    ALLOWED_EXTENSIONS = set(['pdf', 'jpg', 'jpeg'])
 
     IS_PROD = int(os.environ['IS_PROD'])
     PORT = int(os.environ.get('PORT', 5000))
