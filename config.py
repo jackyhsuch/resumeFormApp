@@ -1,4 +1,5 @@
 import os
+import urllib.parse as urlparse
 
 from dotenv import load_dotenv
 
@@ -15,10 +16,23 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = os.urandom(12)
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
     UPLOAD_FOLDER = 'app\\uploads'
     ALLOWED_EXTENSIONS = set(['pdf'])
+
+    IS_PROD = int(os.environ['IS_PROD'])
+
+    if IS_PROD:
+        url = urlparse.urlparse(os.environ['DATABASE_URL'])
+        DB_NAME = url.path[1:]
+        DB_USER = url.username
+        DB_PASS = url.password
+        DB_HOST = url.hostname
+        DB_PORT = url.port
+        SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+url.username+":"+url.password+"@"+url.hostname+":"+str(url.port)+"/resumeformapp_db"
+    else:
+        DEBUG = True
+        SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
 class ProductionConfig(Config):
@@ -26,14 +40,16 @@ class ProductionConfig(Config):
 
 
 class StagingConfig(Config):
-    DEVELOPMENT = True
     DEBUG = True
 
 
 class DevelopmentConfig(Config):
-    DEVELOPMENT = True
     DEBUG = True
 
 
 class TestingConfig(Config):
     TESTING = True
+
+
+class LocalConfig(Config):
+    DEBUG = True
