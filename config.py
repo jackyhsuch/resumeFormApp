@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 try:
     dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
     load_dotenv(dotenv_path)
-except Exception as e:
+except:
     pass
 
 
@@ -24,12 +24,7 @@ class Config(object):
 
     if IS_PROD:
         url = urlparse.urlparse(os.environ['DATABASE_URL'])
-        DB_NAME = url.path[1:]
-        DB_USER = url.username
-        DB_PASS = url.password
-        DB_HOST = url.hostname
-        DB_PORT = url.port
-        SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+url.username+":"+url.password+"@"+url.hostname+":"+str(url.port)+"/resumeformapp_db"
+        SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+url.username+":"+url.password+"@"+url.hostname+":"+str(url.port)+"/"+url.path[1:]
     else:
         DEBUG = True
         SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
