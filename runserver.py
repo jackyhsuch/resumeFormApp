@@ -4,7 +4,7 @@ from app.applicant.views import applicant_blueprint
 
 app.register_blueprint(welcome_blueprint, url_prefix='')
 app.register_blueprint(applicant_blueprint, url_prefix='/applicant')
-app.run(host="0.0.0.0",port=8080,debug=True)
+app.run(host="0.0.0.0",port=5000,debug=True)
 
 
 @app.errorhandler(404)
