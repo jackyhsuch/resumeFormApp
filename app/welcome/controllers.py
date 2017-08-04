@@ -28,7 +28,6 @@ def parseApplicationRequest(request):
         resume_filename = str(int(datetime.datetime.utcnow().timestamp())) + '.pdf'
 
         if resume_file.filename.endswith('.pdf'):
-            print(os.path.join(app.config['UPLOAD_FOLDER'], resume_filename))
             resume_file.save(os.path.join(app.config['UPLOAD_FOLDER'], resume_filename).replace("/","\\"))
         else:
             im = Image.open(resume_file)
