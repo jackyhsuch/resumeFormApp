@@ -19,4 +19,10 @@ def index():
 
 @applicant_blueprint.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(directory='uploads', filename=filename, as_attachment=True)
+    try:
+        result = send_from_directory(directory='uploads', filename=filename, as_attachment=True)
+    except:
+        result = None
+
+
+    return result
