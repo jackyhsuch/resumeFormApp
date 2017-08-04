@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, send_from_directory
+from flask import Blueprint, render_template, request, send_from_directory, send_file
 from app.applicant.controllers import *
 from app import app
 
@@ -19,9 +19,16 @@ def index():
 
 @applicant_blueprint.route('/uploads/<filename>')
 def uploaded_file(filename):
-    print("here")
+    # import pdb
     try:
-        result = send_from_directory(directory='uploads', filename=filename, as_attachment=True)
+        # pdb.set_trace()
+        result = send_file('uploads\\'+filename, as_attachment=True)
+
+        # result = send_from_directory(directory='uploads', filename=filename, as_attachment=True)
+
+        # pdb.set_trace()
+
+        print(result)
     except Exception as e:
         print(e)
         result = e
