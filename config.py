@@ -23,6 +23,10 @@ class Config(object):
     IS_PROD = int(os.environ['IS_PROD'])
     PORT = int(os.environ.get('PORT', 5000))
 
+    S3_BUCKET = os.environ['S3_BUCKET']
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
     if IS_PROD:
         url = urlparse.urlparse(os.environ['DATABASE_URL'])
         SQLALCHEMY_DATABASE_URI = "postgresql+psycopg2://"+url.username+":"+url.password+"@"+url.hostname+":"+str(url.port)+"/"+url.path[1:]

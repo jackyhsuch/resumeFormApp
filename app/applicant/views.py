@@ -1,6 +1,9 @@
-from flask import Blueprint, render_template, request, send_from_directory
+import boto3
+
+from flask import Blueprint, render_template, request, send_from_directory, Response
 from app.applicant.controllers import *
 from app import app
+
 
 applicant_blueprint = Blueprint(
         'applicant',
@@ -19,4 +22,11 @@ def index():
 
 @applicant_blueprint.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(directory='uploads', filename=filename, as_attachment=True)
+    s3_client = boto3.client(service_name='s3', aws_access_key_id=app.config['AWS_ACCESS_KEY_ID'], aws_secret_access_key=app.config['AWS_SECRET_ACCESS_KEY'])
+
+    file = s3_client.get_object(Bucket=app.config['S3_BUCKET'], Key=filename)
+    return Response(
+        file['Body'].read(),
+        mimetype='application/pdf',
+        headers={"Content-Disposition": "attachment;filename="+filename}
+    )
