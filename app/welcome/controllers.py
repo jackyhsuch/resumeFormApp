@@ -13,7 +13,6 @@ def parseApplicationRequest(request):
     email = request.form['email']
     mobile_number = request.form['mobile_number']
     resume_file = request.files['resume_filename']
-    photo = request.files['photo']
 
     # if photo:
     #     resume_filename = str(int(datetime.datetime.utcnow().timestamp())) + '.pdf'
